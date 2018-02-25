@@ -31,7 +31,7 @@ class IndexController extends HomeController
         header('Access-Control-Allow-Credentials:true');
         $info = D('Index')->get_full_info(1);
         // dump($info);
-        $this->success($info);
+        $this->ajaxReturn($info);
 
     }
 }

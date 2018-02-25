@@ -56,6 +56,8 @@ class IndexModel extends Model
         $experience = D('Experience')
             ->where(array('rid' => $result['id'],'status' => 1))
             ->group('company')
+            ->field('company, project, content, time_range, position')
+
             ->select();
         if($experience) {
             $result['experience'] = $experience;

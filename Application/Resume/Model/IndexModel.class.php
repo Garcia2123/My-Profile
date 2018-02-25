@@ -52,22 +52,7 @@ class IndexModel extends Model
      */
     protected function _after_find(&$result, $options)
     {
-        $result['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
-        $experience = D('Experience')
-            ->where(array('rid' => $result['id'],'status' => 1))
-            ->field('company, project, content, time_range, position')
-            // ->group('company')
-            ->select();
-        if($experience) {
-            $result['experience'] = $experience;
-        }
 
-        $project = D('Project')
-            ->where(array('rid' => $result['id'],'status' => 1))
-            ->select();
-        if($project) {
-            $result['project'] = $project;
-        }
     }
 
     /**
@@ -94,20 +79,26 @@ class IndexModel extends Model
     }
 
     // 获取完整信息
-    public function get_full_info($id) {
+    public function get_full_info($id='') {
         $info = $this->find($id);
         $info['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
         $experience = D('Experience')
             ->where(array('rid' => $id,'status' => 1))
-            ->field('company, project, content, time_range, position')
-            // ->group('company')
+            ->field('id,company, time_range, position')
             ->select();
         if($experience) {
+            foreach ($experience as $key => &$value) {
+                $value['project_list'] = D('Exproject')
+                    ->where(array('status' => 1,'company_id' => $value['id']))
+                    ->field('id,title,content')
+                    ->select();
+            }
             $info['experience'] = $experience;
         }
 
         $project = D('Project')
             ->where(array('rid' => $id,'status' => 1))
+            ->field('id,title,content')
             ->select();
         if($project) {
             $info['project'] = $project;

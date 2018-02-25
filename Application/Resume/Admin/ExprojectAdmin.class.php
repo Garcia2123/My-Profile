@@ -31,7 +31,7 @@ class ExprojectAdmin extends AdminController
 
         $builder = new \lyf\builder\ListBuilder();
         $builder->setMetaTitle("列表") // 设置页面标题
-            ->addTopButton("addnew") // 添加新增按钮
+            ->addTopButton("addnew",array('href' => U('add', array('company_id' => $company_id)))) // 添加新增按钮
             ->addTopButton("resume") // 添加启用按钮
             ->addTopButton("forbid") // 添加禁用按钮
             ->addTableColumn("id", "ID")
@@ -49,6 +49,9 @@ class ExprojectAdmin extends AdminController
     // 新增项目
     public function add($company_id='')
     {
+        if(!$company_id) {
+            $this->error('缺少公司ID');
+        }
         if(request()->isPost()) {
             $object = D('Exproject');
             $data   = $object->create(format_data());
@@ -69,7 +72,7 @@ class ExprojectAdmin extends AdminController
                 ->setPostUrl(U('add')) // 设置表单提交地址
                 ->addFormItem('company_id','hidden','公司ID','公司ID')
                 ->addFormItem('title', 'text', '项目名称', '项目名称')
-                ->addFormItem("content", "summernote", "项目内容", "项目内容")
+                ->addFormItem("content", "textarea", "项目内容", "项目内容")
                 ->setFormData(array('company_id' => $company_id))
                 ->display();
         }
@@ -99,7 +102,7 @@ class ExprojectAdmin extends AdminController
                 ->addFormItem('id','hidden','ID','ID')
                 ->addFormItem('company_id','hidden','公司ID','公司ID')
                 ->addFormItem('title', 'text', '项目名称', '项目名称')
-                ->addFormItem("content", "summernote", "项目内容", "项目内容")
+                ->addFormItem("content", "textarea", "项目内容", "项目内容")
                 ->setFormData(D('Exproject')->find($id))
                 ->display();
         }

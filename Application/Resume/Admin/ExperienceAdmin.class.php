@@ -79,8 +79,6 @@ class ExperienceAdmin extends AdminController
                 ->addFormItem('company', 'text', '公司名称', '公司名称')
                 ->addFormItem('position', 'text', '职位', '职位')
                 ->addFormItem('time_range', 'text', '时间', '时间')
-                ->addFormItem('project', 'text', '项目名称', '项目名称')
-                ->addFormItem("content", "summernote", "项目内容", "项目内容")
                 ->display();
         }
     }
@@ -111,8 +109,6 @@ class ExperienceAdmin extends AdminController
                 ->addFormItem('company', 'text', '公司名称', '公司名称')
                 ->addFormItem('position', 'text', '职位', '职位')
                 ->addFormItem('time_range', 'text', '时间', '时间')
-                ->addFormItem('project', 'text', '项目名称', '项目名称')
-                ->addFormItem("content", "summernote", "项目内容", "项目内容")
                 ->setFormData(D('Experience')->find($id))
                 ->display();
         }

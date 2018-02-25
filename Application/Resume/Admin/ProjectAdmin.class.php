@@ -77,7 +77,7 @@ class ProjectAdmin extends AdminController
             $builder->setMetaTitle('新增') //设置页面标题
                 ->setPostUrl(U('add')) // 设置表单提交地址
                 ->addFormItem('title', 'text', '项目名称', '项目名称')
-                ->addFormItem("content", "summernote", "项目内容", "项目内容")
+                ->addFormItem("content", "textarea", "项目内容", "项目内容")
                 ->display();
         }
     }
@@ -109,7 +109,7 @@ class ProjectAdmin extends AdminController
                 ->setPostUrl(U('edit')) // 设置表单提交地址
                 ->addFormItem('id', 'hidden', 'ID', 'ID')
                 ->addFormItem('title', 'text', '项目名称', '项目名称')
-                ->addFormItem("content", "summernote", "项目内容", "项目内容")
+                ->addFormItem("content", "textarea", "项目内容", "项目内容")
                 ->setFormData(D('Project')->find($id))
                 ->display();
         }

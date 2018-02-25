@@ -55,9 +55,8 @@ class IndexModel extends Model
         $result['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
         $experience = D('Experience')
             ->where(array('rid' => $result['id'],'status' => 1))
-            ->group('company')
             ->field('company, project, content, time_range, position')
-
+            ->group('company')
             ->select();
         if($experience) {
             $result['experience'] = $experience;

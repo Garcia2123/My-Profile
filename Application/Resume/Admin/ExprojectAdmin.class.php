@@ -10,61 +10,52 @@
 // | 拷贝、复制、传播、使用零云的任意代码，如有违反，请立即删除，否则您将面临承担相应
 // | 法律责任的风险。如果需要取得官方授权，请联系官方http://www.lingyun.net
 // +----------------------------------------------------------------------
+
 namespace Resume\Admin;
 
 use Admin\Controller\AdminController;
 use lyf\Page;
 
 /**
- * 工作经历
+ * 公司项目
  * @author jry <598821125@qq.com>
  */
-class ExperienceAdmin extends AdminController
+class ExprojectAdmin extends AdminController
 {
-    // 列表
-    public function index()
+    // 公司项目列表
+    public function index($company_id='')
     {
-        $data_list = D('Experience')
-            ->where($map)
-            // ->order("id desc")
+        $data_list = D('Exproject')
+            ->where(array('company_id' => $company_id))
             ->select();
 
-        $attr['name'] = 'project';
-        $attr['title'] = '项目经历';
-        $attr['class'] = 'label label-success-outline label-pill';
-        $attr['href'] = U('Exproject/index',array('company_id' => __data_id__));
-
-        // 使用Builder快速建立列表页面
         $builder = new \lyf\builder\ListBuilder();
         $builder->setMetaTitle("列表") // 设置页面标题
             ->addTopButton("addnew") // 添加新增按钮
             ->addTopButton("resume") // 添加启用按钮
             ->addTopButton("forbid") // 添加禁用按钮
             ->addTableColumn("id", "ID")
-            ->addTableColumn("company", "公司")
-            ->addTableColumn('position','职位')
+            ->addTableColumn('title','项目')
             ->addTableColumn("create_time", "创建时间", "time")
             ->addTableColumn("status", "状态", "status")
             ->addTableColumn("right_button", "操作", "btn")
             ->setTableDataList($data_list) // 数据列表
-            // ->setTableDataPage($page->show()) // 数据列表分页
             ->addRightButton("edit")
             ->addRightButton("forbid")
             ->addRightButton("delete")
-            ->addRightButton('self', $attr)
             ->display();
     }
 
-    // 新增
-    public function add()
+    // 新增项目
+    public function add($company_id='')
     {
-        if (request()->isPost()) {
-            $object = D('Experience');
+        if(request()->isPost()) {
+            $object = D('Exproject');
             $data   = $object->create(format_data());
             if ($data) {
                 $id = $object->add();
                 if ($id) {
-                    $this->success('新增成功', U('index'));
+                    $this->success('新增成功', U('index',array('company_id' => $company_id)));
                 } else {
                     $this->error('新增失败');
                 }
@@ -76,44 +67,40 @@ class ExperienceAdmin extends AdminController
             $builder = new \lyf\builder\FormBuilder();
             $builder->setMetaTitle('新增') //设置页面标题
                 ->setPostUrl(U('add')) // 设置表单提交地址
-                ->addFormItem('company', 'text', '公司名称', '公司名称')
-                ->addFormItem('position', 'text', '职位', '职位')
-                ->addFormItem('time_range', 'text', '时间', '时间')
-                ->addFormItem('project', 'text', '项目名称', '项目名称')
+                ->addFormItem('company_id','hidden','公司ID','公司ID')
+                ->addFormItem('title', 'text', '项目名称', '项目名称')
                 ->addFormItem("content", "summernote", "项目内容", "项目内容")
+                ->setFormData(array('company_id' => $company_id))
                 ->display();
         }
     }
 
-    //  编辑
-    public function edit($id)
+    // 编辑项目
+    public function edit($d='')
     {
-        if (request()->isPost()) {
-            // 提交数据
-            $object = D('Experience');
+        if(request()->isPost()) {
+            $object = D('Exproject');
             $data   = $object->create(format_data());
             if ($data) {
-                $result = $object->save($data);
-                if ($result) {
-                    $this->success('更新成功', U('index'));
+                $id = $object->save();
+                if ($id) {
+                    $this->success('编辑成功', U('index',array('company_id' => $data['company_id'])));
                 } else {
-                    $this->error('更新失败', $object->getError());
+                    $this->error('编辑失败,'.$object->getError());
                 }
             } else {
-                $this->error($object->getError());
+                $this->error('编辑失败,'.$object->getError());
             }
         } else {
             // 使用FormBuilder快速建立表单页面
             $builder = new \lyf\builder\FormBuilder();
             $builder->setMetaTitle('编辑') //设置页面标题
                 ->setPostUrl(U('edit')) // 设置表单提交地址
-                ->addFormItem('id', 'hidden', 'ID', 'ID')
-                ->addFormItem('company', 'text', '公司名称', '公司名称')
-                ->addFormItem('position', 'text', '职位', '职位')
-                ->addFormItem('time_range', 'text', '时间', '时间')
-                ->addFormItem('project', 'text', '项目名称', '项目名称')
+                ->addFormItem('id','hidden','ID','ID')
+                ->addFormItem('company_id','hidden','公司ID','公司ID')
+                ->addFormItem('title', 'text', '项目名称', '项目名称')
                 ->addFormItem("content", "summernote", "项目内容", "项目内容")
-                ->setFormData(D('Experience')->find($id))
+                ->setFormData(D('Exproject')->find($id))
                 ->display();
         }
     }

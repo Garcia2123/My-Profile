@@ -28,6 +28,8 @@ class IndexController extends HomeController
     public function index()
     {
         $info = D('Index')->get_full_info(1);
-        $this->success($info);
+        dump($info);
+        // $this->success($info);
+
     }
 }

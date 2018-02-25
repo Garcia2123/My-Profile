@@ -15,16 +15,16 @@ namespace Resume\Model;
 use Common\Model\Model;
 
 /**
- * 默认
+ * 公司项目经历
  * @author jry <598821125@qq.com>
  */
-class IndexModel extends Model
+class ExprojectModel extends Model
 {
     /**
      * 数据库表名
      * @author jry <598821125@qq.com>
      */
-    protected $tableName = 'resume_index';
+    protected $tableName = 'resume_experience_project';
 
     /**
      * 自动验证规则
@@ -40,7 +40,6 @@ class IndexModel extends Model
      * @author jry <598821125@qq.com>
      */
     protected $_auto = array(
-        array('uid', 'is_login', self::MODEL_BOTH, 'function'),
         array('create_time', 'time', self::MODEL_INSERT, 'function'),
         array('update_time', 'time', self::MODEL_BOTH, 'function'),
         array('status', 1, self::MODEL_INSERT, 'string'),
@@ -52,22 +51,7 @@ class IndexModel extends Model
      */
     protected function _after_find(&$result, $options)
     {
-        $result['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
-        $experience = D('Experience')
-            ->where(array('rid' => $result['id'],'status' => 1))
-            ->field('company, project, content, time_range, position')
-            // ->group('company')
-            ->select();
-        if($experience) {
-            $result['experience'] = $experience;
-        }
-
-        $project = D('Project')
-            ->where(array('rid' => $result['id'],'status' => 1))
-            ->select();
-        if($project) {
-            $result['project'] = $project;
-        }
+        
     }
 
     /**
@@ -79,40 +63,5 @@ class IndexModel extends Model
         foreach ($result as &$record) {
             $this->_after_find($record, $options);
         }
-    }
-
-    // 学历
-    public function academic_list($id='')
-    {
-        $list['1'] = '初中';
-        $list['2'] = '高中';
-        $list['3'] = '本科';
-        $list['4'] = '研究生';
-        $list['5'] = '博士';
-
-        return $id ? $list[$id] : $list;
-    }
-
-    // 获取完整信息
-    public function get_full_info($id) {
-        $info = $this->find($id);
-        $info['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
-        $experience = D('Experience')
-            ->where(array('rid' => $id,'status' => 1))
-            ->field('company, project, content, time_range, position')
-            // ->group('company')
-            ->select();
-        if($experience) {
-            $info['experience'] = $experience;
-        }
-
-        $project = D('Project')
-            ->where(array('rid' => $id,'status' => 1))
-            ->select();
-        if($project) {
-            $info['project'] = $project;
-        }
-
-        return $info;
     }
 }

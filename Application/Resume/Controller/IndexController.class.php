@@ -27,9 +27,11 @@ class IndexController extends HomeController
      */
     public function index()
     {
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Credentials:true');
         $info = D('Index')->get_full_info(1);
-        dump($info);
-        // $this->success($info);
+        // dump($info);
+        $this->success($info);
 
     }
 }

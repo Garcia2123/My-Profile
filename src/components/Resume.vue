@@ -25,6 +25,7 @@
     import Skills from '@/components/Skills'
     import Experience from '@/components/Experience'
     import Project from '@/components/Project'
+
     export default {
         name: 'Resume',
         data() {
@@ -34,6 +35,17 @@
                 autoplay: false,
                 position: 'relative'
             }
+        },
+        created: function () {
+            this.$http.get('http://admin.yuri.cool/index.php?s=/resume/index/index').then(response => {
+
+                // get body data
+                // this.someData = response.body;
+                console.log(response.body);
+
+            }, response => {
+                // error callback
+            });
         },
         components: {
             'contact': Contact,

@@ -56,7 +56,7 @@ class IndexModel extends Model
         $experience = D('Experience')
             ->where(array('rid' => $result['id'],'status' => 1))
             ->field('company, project, content, time_range, position')
-            ->group('company')
+            // ->group('company')
             ->select();
         if($experience) {
             $result['experience'] = $experience;
@@ -91,5 +91,28 @@ class IndexModel extends Model
         $list['5'] = '博士';
 
         return $id ? $list[$id] : $list;
+    }
+
+    // 获取完整信息
+    public function get_full_info($id) {
+        $info = $this->find($id);
+        $info['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
+        $experience = D('Experience')
+            ->where(array('rid' => $id,'status' => 1))
+            ->field('company, project, content, time_range, position')
+            ->group('company')
+            ->select();
+        if($experience) {
+            $info['experience'] = $experience;
+        }
+
+        $project = D('Project')
+            ->where(array('rid' => $id,'status' => 1))
+            ->select();
+        if($project) {
+            $info['project'] = $project;
+        }
+
+        return $info;
     }
 }

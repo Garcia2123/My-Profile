@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.2.6-MariaDB)
 # Database: resume
-# Generation Time: 2018-02-25 10:03:47 +0000
+# Generation Time: 2018-02-25 16:53:11 +0000
 # ************************************************************
 
 
@@ -31,13 +31,29 @@ CREATE TABLE `re_resume_experience` (
   `company` varchar(64) NOT NULL DEFAULT '' COMMENT '公司',
   `position` varchar(64) NOT NULL DEFAULT '' COMMENT '职位',
   `time_range` varchar(64) NOT NULL DEFAULT '' COMMENT '时间段',
-  `project` varchar(64) NOT NULL DEFAULT '' COMMENT '项目名称',
-  `content` text NOT NULL DEFAULT '' COMMENT '自我评价',
   `create_time` int(11) unsigned NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` tinyint(3) NOT NULL DEFAULT 0 COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作经历信息表';
+
+
+
+# Dump of table re_resume_experience_project
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `re_resume_experience_project`;
+
+CREATE TABLE `re_resume_experience_project` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `company_id` int(11) NOT NULL DEFAULT 0 COMMENT '绑定公司ID',
+  `title` varchar(64) NOT NULL DEFAULT '' COMMENT '项目名称',
+  `content` text NOT NULL DEFAULT '' COMMENT '自我评价',
+  `create_time` int(11) unsigned NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT 0 COMMENT '更新时间',
+  `status` tinyint(3) NOT NULL DEFAULT 0 COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司项目经历信息表';
 
 
 

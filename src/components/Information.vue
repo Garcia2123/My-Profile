@@ -6,7 +6,7 @@
             <span class="information_info__value">
                 {{ name }}
                 <span v-if='gender_text'>/{{ gender_text }}</span>
-                <span v-if='birthday'>/{{ birthday }}</span>
+                <span v-if='birthday'>/{{ birthday_format }}</span>
             </span>
         </h3>
         <h3 class='information_info' v-if='work_year'>
@@ -37,7 +37,7 @@
 <script>
     export default {
         name: 'Information',
-        props:['name','gender_text','birthday','work_year','academic_text','school','major','expect_position','expect_salary','website'],
+        props:['name','gender_text','birthday_format','work_year','academic_text','school','major','expect_position','expect_salary','website'],
         data() {
             return {
                 title:'个人信息',

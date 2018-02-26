@@ -85,6 +85,9 @@ class IndexModel extends Model
         if($info['academic']) {
             $info['academic_text'] = $this->academic_list($info['academic']);
         }
+        if($info['birthday']) {
+            $info['birthday_format'] = time_format($info['birthday'],'Y-m-d');
+        }
         $experience = D('Experience')
             ->where(array('rid' => $id,'status' => 1))
             ->field('id,company, time_range, position')

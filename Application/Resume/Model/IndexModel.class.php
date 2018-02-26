@@ -81,7 +81,10 @@ class IndexModel extends Model
     // 获取完整信息
     public function get_full_info($id='') {
         $info = $this->find($id);
-        $info['gender_text'] = $result['gender'] == '-1' ? '女' : '男';
+        $info['gender_text'] = $info['gender'] == '-1' ? '女' : '男';
+        if($info['academic']) {
+            $info['academic_text'] = $this->academic_list($info['academic']);
+        }
         $experience = D('Experience')
             ->where(array('rid' => $id,'status' => 1))
             ->field('id,company, time_range, position')

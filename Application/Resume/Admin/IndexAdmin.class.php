@@ -54,7 +54,7 @@ class IndexAdmin extends AdminController
                 ->addFormItem('mobile','text','手机','手机')
                 ->addFormItem('email','text','邮箱','邮箱')
                 ->addFormItem('qq','text','QQ','QQ')
-                ->addFormItem('birthday','time','出生日期','出生日期')
+                ->addFormItem('birthday','date','出生日期','出生日期')
                 ->addFormItem('work_year','text','工作年限','工作年限')
                 ->addFormItem('academic','select','学历','学历',D('Index')->academic_list())
                 ->addFormItem('major','text','专业','专业')

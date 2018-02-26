@@ -2,19 +2,19 @@
     <div class="carousel-box">
         <el-carousel :height="height" :autoplay='autoplay'>
             <el-carousel-item :position='position'>
-                <contact />
+                <contact v-bind='info' />
             </el-carousel-item>
             <el-carousel-item :position='position'>
-                <Information />
+                <Information v-bind='info' />
             </el-carousel-item>
             <el-carousel-item :position='position'>
-                <experience />
+                <experience v-bind='info' />
             </el-carousel-item>
             <el-carousel-item :position='position'>
-                <project />
+                <project v-bind='info' />
             </el-carousel-item>
             <el-carousel-item :position='position'>
-                <skills />
+                <skill v-bind='info' />
             </el-carousel-item>
         </el-carousel>
     </div>
@@ -22,25 +22,27 @@
 <script>
     import Contact from '@/components/Contact'
     import Information from '@/components/Information'
-    import Skills from '@/components/Skills'
+    import Skill from '@/components/Skill'
     import Experience from '@/components/Experience'
     import Project from '@/components/Project'
 
     export default {
         name: 'Resume',
+        // props: ['contact'],
         data() {
             return {
                 item: 1,
                 height: '100%',
                 autoplay: false,
-                position: 'relative'
+                position: 'relative',
+                info: {}
             }
         },
         created: function () {
             this.$http.get('http://admin.yuri.cool/index.php?s=/resume/index/index').then(response => {
 
                 // get body data
-                // this.someData = response.body;
+                this.info = response.body;
                 console.log(response.body);
 
             }, response => {
@@ -50,7 +52,7 @@
         components: {
             'contact': Contact,
             'Information': Information,
-            'skills': Skills,
+            'skill': Skill,
             'experience': Experience,
             'project': Project
         }

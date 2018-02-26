@@ -1,23 +1,27 @@
 <template>
     <div class="center">
         <h1>{{ title }}</h1>
-        <h3 class='contact_info' v-for='item in contact_info'>
-            <span class="contact_info__name">{{ item.name }}：</span>
-            <span class="contact_info__value">{{ item.value }}</span>
+        <h3 class='contact_info' v-if='mobile'>
+            <span class="contact_info__name">手机：</span>
+            <span class="contact_info__value">{{ mobile }}</span>
+        </h3>
+        <h3 class='contact_info'>
+            <span class="contact_info__name" v-if='email'>邮箱：</span>
+            <span class="contact_info__value">{{ email }}</span>
+        </h3>
+        <h3 class='contact_info'>
+            <span class="contact_info__name" v-if='qq'>QQ：</span>
+            <span class="contact_info__value">{{ qq }}</span>
         </h3>
     </div>
 </template>
 <script>
     export default {
         name: 'Contact',
+        props: ['mobile','email','qq'],
         data() {
             return {
                 title:'联系方式',
-                contact_info: [
-                    {name:'手机', value:'15******061'},
-                    {name: '邮箱', value: 'y*****@qq.com'},
-                    {name:'QQ', value:'5*******1'}
-                ]
             }
         }
     }
@@ -30,6 +34,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        max-width: calc(100% - 40px);
     }
     .contact_info__name {
         display: inline-block;

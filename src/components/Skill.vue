@@ -1,11 +1,15 @@
 <template>
     <div class="center">
         <h1>{{ title }}</h1>
+        <div class="skill-box">
+            <p class="skill" v-html='skill'></p>
+        </div>
     </div>
 </template>
 <script>
     export default {
-        name: 'Skills',
+        name: 'Skill',
+        props:['skill'],
         data() {
             return {
                 title:'技能清单'
@@ -21,5 +25,10 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        max-width: calc(100% - 40px);
+    }
+    .skill {
+        max-height: calc(100% - 50px);
+        overflow: scroll;
     }
 </style>

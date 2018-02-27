@@ -6,7 +6,7 @@
             <span class="information_info__value">
                 {{ name }}
                 <span v-if='gender_text'>/{{ gender_text }}</span>
-                <span v-if='birthday'>/{{ birthday_format }}</span>
+                <span v-if='birthday_format'>/{{ birthday_format }}</span>
             </span>
         </h3>
         <h3 class='information_info' v-if='work_year'>
@@ -54,5 +54,8 @@
         top: 50%;
         transform: translate(-50%, -50%);
         max-width: calc(100% - 40px);
+    }
+    .center > h3 {
+        text-align: left;
     }
 </style>
